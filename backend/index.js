@@ -9,6 +9,8 @@ connectDB();
 
 import connectDB from './config/db.js';
 import cookieParser from 'cookie-parser';
+import authRoutes from './Routes/auth.routes.js';
+
 //cors setting 
 app.use(cors({
     origin : ["http://localhost:3000"],
@@ -23,7 +25,7 @@ app.use(cookieParser())
 
 
 app.get('/',(req,res)=> {
-    res.end('Hello')
+    res.end('test')
 })
 
 app.listen(3000,()=> {
