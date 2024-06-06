@@ -29,8 +29,9 @@ function LoginPage() {
 
                <button className='ml-3 w-72 md:w-96  h-10 rounded-lg mb-5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold'>Login</button>
               </div>
-
+            <Link to={'/signup'}>
            <p className='text-xs ml-5'>Do not have an account ?  <span className='text-blue-700 font-semibold hover:cursor-pointer hover:text-blue-500'>sign up</span></p>
+            </Link>
            </form>
 
            </div>
