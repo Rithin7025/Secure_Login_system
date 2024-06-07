@@ -7,16 +7,30 @@ import bcrypt from 'bcryptjs';
 
 export const userSignup = async (req, res, next) => {
   const { name, password, email } = req.body;
+  console.log(name,password,email)
+  console.log('entered controller')
+  //check if any fields are missing 
+  if(!name || !password || !email){
+    const credentialsError = new Error('All fields are required: name, password, and email.');
+    credentialsError.statusCode = 400;
+    credentialsError.message = "please provide name, email and password"
+   return next(credentialsError); //return the function as soon as we encounter error
+  }
   //hasing entered password
-  const hashedPassword = await bcrypt.hashSync(password, 10);
+  const userName = name[0];
+  const userEmail = email[0];
+  const userPassword = password[0];
+
+  const hashedPassword = await bcrypt.hashSync(userPassword, 10);
 
   try {
     const user = new User({
-      name,
-      email,
+      name : userName,
+      email : userEmail,
       password: hashedPassword,
     });
-
+    console.log('entered try')
+    
     //saving the new User
     const newUser = await user.save();
     console.log(newUser);
@@ -26,10 +40,10 @@ export const userSignup = async (req, res, next) => {
   } catch (error) {
     if (error.code == 11000 && error.keyPattern && error.keyValue.email) {
       const duplicateEmailError = new Error('Email already exists');
-      duplicateEmailError.statusCode = 400;
-      next(duplicateEmailError);
+      duplicateEmailError.statusCode = 409;
+     return next(duplicateEmailError);
     } else {
-      next(error); //passing the error to the middleware errorhandler.js
+     return next(error); //passing the error to the middleware errorhandler.js
     }
   }
 };
@@ -37,8 +51,17 @@ export const userSignup = async (req, res, next) => {
 //controller to handle login
 export const userLogin = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
 
+    console.log('entered login')
+    const { email, password } = req.body;
+   console.log(email,password)
+   
+    if(!email || !password){
+      const credentialsError = new Error('All feilds are required: email and password')
+      credentialsError.statusCode = 400;
+      credentialsError.message = 'please provide email and password'
+      return next(credentialsError)
+    }
     const user = await User.findOne({ email });
     //check if the user exists
     if (!user) {
@@ -48,7 +71,7 @@ export const userLogin = async (req, res, next) => {
     }
 
     //compares the passwords
-    const isPasswordValid = await bcrypt.compareSync(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       const incorrectPasswordError = new Error('Incorrect Password');
       incorrectPasswordError.statusCode = 401;
@@ -65,10 +88,7 @@ export const userLogin = async (req, res, next) => {
       .cookie('access_token', token, { httpOnly: true })
       .status(200)
       .json({ success: true, message: 'Logged In successfully', userInfo });
-    res.status(200).json({
-      success: true,
-      message: 'User signed in succesfully',
-    });
+    
   } catch (error) {
     return next(error);
   }
