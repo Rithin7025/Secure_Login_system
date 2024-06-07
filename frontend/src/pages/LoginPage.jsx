@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 function LoginPage() {
+  const [formData,setFormData] = useState({});
+  const [formError, setFormError] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  
   return (
     <div className='min-h-screen  bg-slate-300 flex sm:flex-row'>
         {/* left div */}

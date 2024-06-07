@@ -16,17 +16,17 @@ function SignupPage() {
            <form action="" >
                <div>
                 <p className='text-sm ml-5  '>Full Name</p>
-                <input type="text" name="name" id="name"  className='pl-2 mt-1 ml-4  w-72 md:w-96 h-10 rounded-lg mb-3 focus:outline-none border border-slate-300'  placeholder='  full-name'/>
+                <input type="text" required="true" name="name" id="name"  className='pl-2 mt-1 ml-4  w-72 md:w-96 h-10 rounded-lg mb-3 focus:outline-none border border-slate-300'  placeholder='  full-name'/>
                </div>
               
                <div>
                 <p className='text-sm ml-5  '>Email address</p>
-                <input type="email" name="email" id="email"  className='pl-2 mt-1 ml-4  w-72 md:w-96 h-10 rounded-lg mb-3 focus:outline-none border border-slate-300'  placeholder='  enter your email'/>
+                <input type="email" required="true" name="email" id="email"  className='pl-2 mt-1 ml-4  w-72 md:w-96 h-10 rounded-lg mb-3 focus:outline-none border border-slate-300'  placeholder='  enter your email'/>
                </div>
 
                <div>
                 <p className='text-sm ml-5 '>password</p>
-                <input type="password" name="password" id="password" placeholder='  enter your password' className='ml-4 pl-2 mt-1 w-72 md:w-96  h-10 rounded-lg focus:outline-none border border-slate-300'/>
+                <input type="password" required="true" name="password" id="password" placeholder='  enter your password' className='ml-4 pl-2 mt-1 w-72 md:w-96  h-10 rounded-lg focus:outline-none border border-slate-300'/>
                </div>
               
               <div className='flex justify-center mt-5'>
