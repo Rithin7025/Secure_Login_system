@@ -93,3 +93,17 @@ export const userLogin = async (req, res, next) => {
     return next(error);
   }
 };
+
+
+
+//controller to logout
+export const signOut = (req,res) => {
+  try {
+    console.log('entered sign out')
+    res.clearCookie('access_token');
+    res.clearCookie('session_cookie');
+    res.status(200).json({message : "User has been logged out"})
+  } catch (error) {
+    console.log(error)
+  }
+}
